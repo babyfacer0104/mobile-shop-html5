@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html>
+<head lang="cn">
+    <title>开通宝</title>
+    <meta charset="utf-8" />
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta name="renderer" content="webkit|ie-comp|ie-stand">
+    <meta name="format-detection" content="telephone=no" />
+    <meta name="format-detection" content="email=no" />
+    <meta name="format-detection" content="address=no">
+    <meta http-equiv="keywords" content="" />
+    <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,userscalable=no">
+    <!--<meta name="apple-mobile-web-app-capable" content="yes">-->
+    <!--<meta name="apple-mobile-web-app-status-bar-style" content="black">-->
+    <link rel="stylesheet" href="assets/css/sm.css"/>
+    <link rel="stylesheet" href="//g.alicdn.com/msui/sm/0.6.2/css/sm-extend.css">
+    <link rel="stylesheet" href="assets/css/opf/common.css"/>
+    <!--<link rel="stylesheet" href="assets/css/animate.css"/>-->
+</head>
+<body>
+<div class="page-group">
+    <div class="page page-current">
+    </div>
+</div>
+</body>
+<script type='text/javascript' src='assets/scripts/vendor/zepto.js' charset='utf-8'></script>
+<script type='text/javascript' src='assets/scripts/vendor/sm.js' charset='utf-8'></script>
+<script type='text/javascript' src='//g.alicdn.com/msui/sm/0.6.2/js/sm-extend.min.js' charset='utf-8'></script>
+<script type='text/javascript' src='assets/scripts/vendor/underscore.js' charset='utf-8'></script>
+<script type="text/javascript" src="assets/scripts/app/common/common.js"></script>
+<script type="text/javascript" src="assets/scripts/js/common.js"></script>
+<script type="text/javascript" src="assets/scripts/js/validator.js"></script>
+<script type="text/javascript" src="assets/scripts/app/nav/menu-config.js"></script>
+<script type="text/javascript">
+$(function(){
+    var token = getToken();
+    if(token != ''){
+        sessionStorage.setItem('ktbToken', token);
+    }
+    var goodsType = getGoodsType();
+    if(goodsType != ''){
+        sessionStorage.setItem('goodsType', goodsType);
+    }
+
+    var param = GetQueryString('p') == null ? 'list' : GetQueryString('p');
+    if(param == 'list'){
+        $.router.load(bp()+webUrlPath()+'/assets/scripts/app/list/default.html', true);
+    }
+    else{
+        ajaxUrl(param);
+        sessionStorage.setItem('payType', -1);//-1是进入我的订单，返回直接关闭退出H5
+    }
+    htmlBind();
+    timedCount();
+
+})
+
+function onBack(){
+    $.router.back();
+}
+
+function timedCount()
+{
+    var data = localStorage;
+    var len = 0;
+    for(var i = 0; i < data.length; i++){
+        if(data.key(i).indexOf('cartData') != -1 ){
+            len += 1;
+        }
+    }
+    $('#goCart strong').html('('+len+')');//len==0?'':'('+len+')'
+    setTimeout("timedCount()",2000);
+}
+
+//关闭页面
+function appClose(){
+    appCallBack("exit", '', function(resp) {
+        console.log(resp);
+    });
+}
+</script>
+</html>

@@ -1,0 +1,177 @@
+<meta charset="utf-8" />
+<script type="text/template" id="tpl">
+<%
+    $("<link>").attr({
+        rel: "stylesheet",
+        type: "text/css",
+        href: bp()+webUrlPath()+"/assets/css/opf/base.css"
+    }).appendTo("head");
+
+    $("<link>").attr({
+        rel: "stylesheet",
+        type: "text/css",
+        href: bp()+webUrlPath()+"/assets/css/opf/style.css"
+    }).appendTo("head");
+
+    $.ajax({
+        async: false,
+        url: bp()+webUrlPath()+"/assets/scripts/app/orderlist/common.js",
+        dataType: "script",
+        cache: false
+    });
+
+    var mallOrderList = null;
+    var orderList = null;
+    $.ajax({
+        type: 'GET',
+        async: false,
+        url: serverUrlPath()+'/mall/findOrderListH5?currentNumber=0&access_token='+sessionStorage.getItem('ktbToken'),
+        success: function(resp){
+            if(resp.returnCode == 0){
+                mallOrderList = resp.result.mallOrderList;
+                orderList = resp.result;
+            }
+        }
+    });
+
+    var payType = sessionStorage.getItem('payType');
+    var orderlist_url = '';
+    var orderlist_back = '';
+    var orderlist_click = '';
+    if(payType == 0){
+        orderlist_url = '#';
+        orderlist_back = 'back';
+    }
+    else if(payType == -1 || payType == -2){
+        orderlist_url = '#';
+        orderlist_click = 'appClose()';
+    }
+    else{
+        orderlist_url = bp()+webUrlPath()+'/assets/scripts/app/list/default.html';
+        orderlist_back = '';
+    }
+%>
+</script>
+<div class="page-group">
+    <div class="page page-current">
+        <header id="top" class="bar bar-nav">
+            <a class="button button-link button-nav pull-left <%=orderlist_back%>" href="<%=orderlist_url%>" onclick="<%=orderlist_click%>">
+                <span class="icon icon-left" style="font-weight: bold;"></span>
+            </a>
+            <h1 id="title" class="title">
+                <b>我的订单</b>
+            </h1>
+            <div id="title-right">
+                <a class="button button-link button-nav pull-right" href="<%-bp()%><%-webUrlPath()%>/shouhou.html">
+            <span class="purchase-white">
+                退换货说明
+            </span>
+                </a>
+            </div>
+        </header>
+        <div id="content" class="content native-scroll main-container">
+            <%
+            var orderModel = null;
+            if(mallOrderList != null){
+            _.each(mallOrderList, function(v, i){
+            if(typeof orderList[mallOrderList[i].orderNo] == 'object'){
+            orderModel = orderList[mallOrderList[i].orderNo];
+            %>
+            <article style="background-color: #ffffff;" orderNo='<%=v.orderNo%>'>
+                <div class="order-status-info xst">
+                    <div style="float: left; padding-left:25px; line-height:30px;">
+                        订单编号:<span class="order-sn"><%=v.orderNo%></span>
+                    </div>
+                    <div style="float: right; line-height:30px; padding-right:10px;" onclick="showInstruction(<%=v.orderNo%>)">
+                        <input type="hidden" id="hd-order-id" value="<%=v.id%>" />
+                        <input type="hidden" class="hd-order-payMethod" value="<%=v.paymethod%>" />
+                        <span class="order-status <%=getOrderStatus(v.orderStatus)[0]%>"><%=getOrderStatus(v.orderStatus)[1]%></span>
+                        <a href="javascript:void(0)" class="remittance-instruction txt-orange">(说明)</a>
+                        <span class="order-payMethod"><%=showPayMethodFormatter(v.orderStatus, v.paymethod)%></span>
+                    </div>
+                    <input type="hidden" class="order_data" value='{"id":<%=v.id%>,"expressFee":<%=v.expressFee/100%>,"orderNo":"<%=v.orderNo%>","createTimeToFormat":"<%=v.createTimeToFormat%>","orderStatus":<%=v.orderStatus%>,"totalNumber":<%=v.totalNumber%>,"realPayPrice":<%=v.realPayPrice%>,"receiver":"<%=v.receiver%>","receiverMobile":"<%=v.receiverMobile%>","goodsType":"<%=v.goodstype%>","receiveAddr":"<%=v.receiveProvince%><%=v.receiveCity%><%=v.receiveArea%> <%=v.receiveAddr%>","expressNo":"<%=v.expressNo%>"}'>
+                </div>
+                <div class="product-detail" onclick="clickDetailPage($(this))">
+                    <% _.each(orderModel, function(v, i){ %>
+                    <%if(v.goodsType == 1){%>
+                    <div style="margin-bottom: 5px;">
+                        <a><i style="background-image:url(<%=v.goodsPic%>);"></i>&nbsp;<span class="st" style="top: 5px"><%=v.goodsName%></span><% if(v.standardUnit){%>&nbsp;&nbsp;<span class="xst tg" style="top: 5px">(<%=v.countPerPack%> <%=v.standardUnit%>)</span><%}%>
+                            <div style="background-color: #fecf4d;color: #C62B2B;width: 80px;height:30px;line-height:30px;margin-top:10px;border-radius: 2px;text-align: center">有偿租机</div>
+                        </a>
+                        <a class="tr">
+                            <span class="st rt"><%=v.salesPrice%></span><br>
+                            <span class="st tg">x&nbsp;<%=v.purchaseNum%></span> <!--style="top: 0"-->
+                        </a>
+                    </div>
+                    <%}else{%>
+                    <div style="margin-bottom: 5px;">
+                        <a><i style="background-image:url(<%=v.goodsPic%>);"></i>&nbsp;<span class="st"><%=v.goodsName%></span><% if(v.standardUnit) {%>&nbsp;&nbsp;<span class="xst tg">(<%=v.countPerPack%> <%=v.standardUnit%>)</span><%}%></a>
+                        <a class="tr">
+                            <span class="st rt"><%=v.salesPrice%></span><br>
+                            <span class="st tg">x&nbsp;<%=v.purchaseNum%></span>
+                        </a>
+                    </div>
+                    <%}%>
+                    <%});%>
+                </div>
+                <div class="section">
+                    <div class="section-row">
+                        <div class="v-top" style="float: left;">
+                            运费&nbsp;&nbsp;
+                            <span class="txt-red">
+                                <% if(v.expressFee/100 == 1) {%>
+                                    到付
+                                <% }else {%>
+                                    ¥0
+                                <% }%>
+                            </span>
+                        </div>
+                        <div class="tr" style="float: right;">
+                            合计&nbsp;&nbsp;<span class="txt-red" id="totalCost">¥<%=outputmoney(v.realPayPrice/100) %></span>
+                        </div>
+                    </div>
+                    <div class="orderList-man">
+                        <% if(v.orderStatus == 0) {%>
+                        <a href="" onclick="delOrderConfirm($(this))">
+                            <span>取消订单</span>
+                        </a>
+                        <%}else if(v.orderStatus == 2){%>
+                        <a href="javascript:void(0)" onclick="getOrderConfirm($(this))">
+                            <span>确定收货</span>
+                        </a>
+                        <%}%>
+                    </div>
+                </div>
+            </article>
+            <%} });}%>
+        </div>
+        <!--弹框-->
+        <div class="instruction-overlay" style="display: none;">
+            <div class="instruction">
+                <div class="instruction-title">汇款说明</div>
+                <div class="instruction-content">
+                    <span>盒子支付收款账户：</span>
+                    <ul>
+                        <li>开户名：深圳盒子支付信息技术有限公司</li>
+                        <li>账  号：7559 1924 9610 201</li>
+                        <li>开户行：招商银行深圳福田支行</li>
+                    </ul>
+                    <span class="note">汇款时请一定备注下方订单号：</span>
+                    <span class="order"><span style="color:red"></span></span>
+                </div>
+                <div class="instruction-confirm">
+                    <a href="javascript:void(0)" onclick="this.parentNode.parentNode.parentNode.style.display = 'none'">确定</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script type="text/template" id="tpl">
+    <%
+    $.ajax({
+        url: bp()+webUrlPath()+"/assets/scripts/app/orderlist/common.js",
+        dataType: "script",
+        cache: false
+    });
+    %>
+</script>

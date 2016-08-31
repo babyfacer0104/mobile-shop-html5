@@ -1,0 +1,131 @@
+<meta charset="utf-8" />
+<script type="text/template" id="tpl">
+<%
+    var model = null;
+    var param = GetUrlParam(obj, 'goodsNo');
+    $.ajax({
+        type: 'GET',
+        async: false,
+        dataType: 'json',
+        url: serverUrlPath()+'/mall/getMallGoodsDetailH5?goodsNo=' + param,
+        success: function(resp){
+            model = resp.result;
+        }
+    });
+%>
+</script>
+<div class="page-group">
+    <div class="page page-current">
+        <header id="top" class="bar bar-nav">
+            <a class="button button-link button-nav pull-left back" href="<%-bp()%><%-webUrlPath()%>/assets/scripts/app/list/default.html">
+                <span class="icon icon-left"></span>
+            </a>
+            <h1 id="title" class="title">
+                <b>产品详情</b>
+            </h1>
+            <div id="title-right">
+                <a class="button button-link button-nav pull-right" href="<%-bp()%><%-webUrlPath()%>/assets/scripts/app/cart/default.html" data-no-cache="true">
+                <span id="goCart" class="purchase-white">
+                    我的购物车
+                </span>
+                </a>
+            </div>
+        </header>
+        <div id="content" class="content native-scroll" style="margin: 0 0 1.75rem 0;">
+            <!--<input type="button" value="测试勿动" onclick="history.back();" />-->
+            <div id="detail-rows" class="native-scroll animated slideInRight">
+                <div class="swiper-container swiper-container-horizontal" data-space-between="10" style="border-bottom: solid 1px #D4D4D4; padding-bottom: 0;">
+                    <div class="swiper-wrapper" style="transition-duration: 0ms; transform: translate3d(0px, 0px, 0px);">
+                        <div class="swiper-slide swiper-slide-active" style="width: 100%; height: 100%; margin-right: 10px;">
+                            <!--<img src="<%=model.goodsPic%>" style="width: 100%;height: 18rem;" />-->
+                            <div style="background-image: url(<%=model.goodsPic%>); background-repeat: no-repeat; background-position: center center; background-size:contain; height: 18rem;"></div>
+                        </div>
+                    </div>
+                    <div class="swiper-pagination" style=""><span class="swiper-pagination-bullet swiper-pagination-bullet-active"></span><span class="swiper-pagination-bullet"></span><span class="swiper-pagination-bullet"></span></div>
+                </div>
+                <!--物品-->
+                <div class="card-content" style="position: initial;">
+                    <div class="content-padded">
+                        <!--存储隐藏字段-->
+                        <div id="hd-detail-value">
+                            <input id="detail-Id" type="hidden" value="<%=model.id%>" />
+                            <input id="detail-goodsType" type="hidden" value="<%=model.goodsType%>" />
+                            <input id="detail-goodsPic" type="hidden" value="<%=model.goodsPic%>" />
+                            <input id="detail-minPack" type="hidden" value="<%=model.minPack%>" />
+                            <input id="detail-countPerPack" type="hidden" value="<%=model.countPerPack%>" />
+                            <input id="detail-standardUnit" type="hidden" value="<%=model.standardUnit%>" />
+                            <input id="detail-postage" type="hidden" value="<%=model.postage%>"/>
+                        </div>
+                        <div class="row font34">
+                            <div id="goods-Name" class="col-66 purchase-glay"><b><%=model.goodsName%></b></div>
+                            <div id="total-price" class="col-33 purchase-orange">
+                                <font id="detail-totalPrice" style="float: right;">
+                                    ¥<%=model.totalPrice%>
+                                </font>
+                            </div>
+                        </div>
+                        <div class="row font26 detail-padding4 detail-glay" style="height: 1.5rem;">
+                            <div id="send-Time" class="col-60" style="line-height: 2rem;"><%=model.sendTime%></div>
+                            <div class="col-40"><span style="float: right;">
+                                <% if(model.postage == 0){%>
+                                    快递：<font class="purchase-orange font34">¥<%=model.postage%></font>
+                                <%} else {%>
+                                    运费到付
+                                <%}%>
+                                </span>
+                            </div>
+                        </div>
+                        <div class="row font26 detail-padding4">
+                            <div id="detail-pack" class="detail-glay col-60" style="line-height: 2.1rem;">(<% if(model.standardUnit) {%> <%=model.countPerPack%> <%=model.standardUnit%>，<%}%>起始数量：<%=model.minPack%><%=model.purchaseUnit%>)</div>
+                            <div class="detail-glay col-40">
+                                <font style="float: right;">
+                                    <a class="detail-reduce" href="javascript:void(0);" title="减1"><strong>-</strong></a>
+                                    <input type="text" class="tb-text detail-text" value="1" minlength="<%=model.minPack%>" title="请输入购买量" />
+                                    <a href="javascript:void(0);" class="detail-increase" title="加1"><strong>+</strong></a>
+                                </font>
+                            </div>
+                        </div>
+                        <% if(model.goodsType == 1){ %>
+                        <div class="row font26 detail-padding4" style="margin-left: 0;">
+                            <div class="detail-glay detail-active">
+                                <font id="detail-active-toggle" class="detail-active-on" style="display: none;">已参与</font>
+                                订单超过20台，即可参与《租机风暴循环返》活动
+                            </div>
+                        </div>
+                        <%} %>
+                    </div>
+                </div>
+            </div>
+            <div class="detail-intoduce">
+                <div>
+                    <!--<div class="purchase-glay" style="font-weight: bold; padding: .8rem 0 2rem .6rem;">钱盒S300刷卡器是刷卡器中的战斗机此处为描述</div>-->
+                    <div class="purchase-glay font34" style="font-weight: bold; padding: .8rem 0 1rem .6rem;">描述</div>
+                    <% if(model.goodsDetailPics != undefined || model.goodsDetailPics != null){
+                        $.each(model.goodsDetailPics, function(i, v){%>
+                        <img src="<%=v%>" alt="" style="width: 100%; height: auto;" />
+                    <%});}else{%>
+                        <img src="" alt="" style="width: 100%; height: auto;" />
+                    <%}%>
+                </div>
+            </div>
+        </div>
+        <nav id="foot" class="bar bar-tab">
+            <% if(model.goodsStatus == 2){%>
+            <a class="tab-item" href="#">
+                <span class="purchase-white">暂时缺货</span>
+            </a>
+            <%}else{%>
+            <a id="detail-addCart" class="tab-item purchase-orange-bg" href="#" style="display: <%=model.goodsType == 1 ? 'none' : 'table-cell'%>;">
+                <span class="purchase-white">
+                    加入购物车
+                </span>
+            </a>
+            <a id="detail-buy" class="tab-item purchase-orange-bg" href="javascript:void(0)">
+                <span class="purchase-white">
+                    立即购买
+                </span>
+            </a>
+            <%}%>
+        </nav>
+    </div>
+</div>

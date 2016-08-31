@@ -1,0 +1,10 @@
+.payInfoList {width:90%; padding-top:30px;}
+.payInfoList>li {width:100%; margin-bottom:3px; overflow:hidden;}
+.payInfoList>li:first-child {height:40px; margin-bottom:6px;}
+.icon-xl:before {content:""; display:block; height:160px; background-repeat:no-repeat;}
+.prompt-callback .icon-xl {width:130px; margin:0 auto;}
+.prompt-callback h4 {display:block; padding:20px 0; font-size:26px; font-weight:normal;  text-align:center;}
+.line{height:10px;}
+
+.icon-xl.success:before {background-image:url(../../../images/suc.png); background-size:100%;}
+.icon-xl.fail:before {background-image:url(../../../images/fail.png); background-size:100%;}

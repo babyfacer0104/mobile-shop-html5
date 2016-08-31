@@ -1,0 +1,49 @@
+﻿<meta charset="utf-8" />
+<script type="text/template" id="tpl">
+<%
+	$("<link>").attr({
+		rel: "stylesheet",
+		type: "text/css",
+		href: bp()+webUrlPath()+"/assets/scripts/app/pay/css.css"
+	}).appendTo("head");
+
+	var orderNo = GetUrlParam(obj, 'orderNo');
+	sessionStorage.setItem('payType',1);
+%>
+</script>
+<div class="page-group">
+	<div class="page page-current">
+		<header id="top" class="bar bar-nav">
+			<a class="button button-link button-nav pull-left" href="<%-bp()%><%-webUrlPath()%>/assets/scripts/app/orderlist/default.html" data-no-cache="true">
+				<span class="icon icon-left" style="font-weight: bold;"></span>我的订单
+			</a>
+			<h1 id="title" class="title">
+				<b>订购成功</b>
+			</h1>
+		</header>
+		<div class="content native-scroll main-container">
+			<div style="margin: 0 auto;">
+				<div class="prompt-callback" >
+					<h4 class="ot" style="font-size: 1.3rem;">订购成功</h4>
+					<div class="icon-xl success"></div>
+				</div>
+				<ul class="payInfoList">
+					<li>订单编号：<span class="ot">
+					<font id="pay-offline-orderNo"><%=orderNo%></font>
+					（付款时注明）</span>
+					</li>
+					<li class="tg">请尽快将货款汇到盒子支付收款帐户，并注明订单编号</li>
+					<li class="line"></li>
+					<li>开户名：深圳盒子支付信息技术有限公司</li>
+					<li>账  号：7559 1924 9610 201</li>
+					<li>开户行：招商银行深圳福田支行</li>
+				</ul>
+				<div class="btn-box">
+					<a class="btn btn-block btn-primary" style="background-color:#ED7917;border-color:#ED7917;" href="<%-bp()%><%-webUrlPath()%>/assets/scripts/app/orderlist/default.html" data-no-cache="true">确认</a>
+					<!--onclick="$.router.load(bp()+webUrlPath()+'/assets/scripts/app/orderlist/default.html', true);"-->
+				</div>
+			</div>
+		</div>
+
+	</div>
+</div>

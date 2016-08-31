@@ -1,0 +1,125 @@
+@charset "UTF-8";
+/**
+ * 
+ * @authors TANK.D (dengxiaochuan@iboxpay.com)
+ * @date    2014-04-16 09:27:56
+ * @version 1.0
+ */
+@media screen and (min-width: 320px) and (max-width:459px) {
+    html {
+        font-size:16px!important;
+    }
+    .font26{
+        font-size: .8rem!important;
+    }
+    .font34{
+        font-size: 1.0rem!important;
+    }
+    .bt{
+        font-size: 16px;
+    }
+}
+@media only screen and (min-width: 480px){
+    .form-horizontal .control-label{
+        line-height: 2.2rem;
+    }
+}
+.goodsItem.section-row {font-size:90%; padding-right:1%;}
+.goodsItem>.col-m {width:57%; padding:0 5px;}
+.goodsItem>.img-wrap {width:64px; height:64px; border:1px solid #ccc; overflow:hidden;}
+.goodsItem>.goodsInfo>li {width:100%; height:22px; color:#111; overflow:hidden;}
+.goodsItem>.goodsInfo>li>b {font-size:105%; vertical-align:top;}
+.goodsItem .goodsNum>input[type='number'] {width:40px; padding:3px 2px;}
+.section-row .col-sm-3 {width:35%;}
+.section-row .col-sm-6 {width:62%;}
+/**wutm 20150618**/
+.section-row{border-top:0;}
+.goodsItem{border-bottom:1px solid #e0e0e0;background-color:#ffffff;}
+.order-info{display:table;width:100%;height:50px;background-color:#ffffff;}
+.order-info> div{display:table-cell;width:70%;font-size:20px;line-height:50px;}
+.order-info> div:first-child{padding-left:10px;}
+.order-info> div：last-child{width:30%;}
+.order-info> div button{background-color:#EC6C00;color:#ffffff;border:0;height:80%;width:80%;}
+.goodsItem>.col-m{width:75%;}
+.goodsItem>.goodsInfo{float:right;}
+.goodsItem>.goodsInfo li{height:40px;}
+.goodsItem>.goodsInfo li a{color:#C3C3C3;}
+.goodsItem>.goodsInfo>li.goodsInfo-price{display:table;width:100%;line-height:30px;}
+.goodsItem>.goodsInfo>li.goodsInfo-price>a{display:table-cell;width:50%;height:100%;}
+.goodsItem>.goodsInfo>li.goodsInfo-price>a span:first-child{color:#C62B2B;font-size:15px;}
+.goodsItem>.goodsInfo>li.goodsInfo-price>a p{color:#C62B2B;font-size:15px;margin: 0;padding: 0}
+.goodsItem>.goodsInfo>li.goodsInfo-price>a:first-child span:first-child{color:#5D5D5D;}
+.goodsItem>.goodsInfo>li.goodsInfo-number a{display:block;width:55%;float:left;}
+.goodsItem>.goodsInfo>li.goodsInfo-number a:first-child{height:100%;line-height:30px;width:45%;}
+.goodsItem>.goodsInfo>li.goodsInfo-number a.goodsInfo-number-buynumber{display:table;border-radius:0.3rem;border:#C3C3C3 1px solid}
+.goodsItem>.goodsInfo>li.goodsInfo-number a.goodsInfo-number-buynumber i{display:table-cell;height:38px;line-height:38px;text-align:center;cursor:pointer;}
+.goodsItem>.goodsInfo>li.goodsInfo-number a.goodsInfo-number-buynumber i.reduce,.goodsItem>.goodsInfo>li.goodsInfo-number a.goodsInfo-number-buynumber i.show-number{border-right:#C3C3C3 1px solid;width:25%;}
+.goodsItem>.goodsInfo>li.goodsInfo-number a.goodsInfo-number-buynumber i.reduce,.goodsItem>.goodsInfo>li.goodsInfo-number a.goodsInfo-number-buynumber i.add{color:#5D5D5D;width:35%;}
+.goodsItem>.goodsInfo>li.goodsInfo-number a.goodsInfo-number-buynumber i.gray{color:#C3C3C3;};
+/*----- 【收款记录详情】 -------*/
+.transactionWell {padding:12px; background:#f0f0f0; border:1px solid #ccc; border-width:1px 0;}
+.transactionWell h1 {font-size:30px; line-height:30px; text-align:center; color:#000; margin-bottom:10px; font-weight:normal;}
+.transactionWell h1:first-letter {font-size:130%;}
+.transactionWell h1 small {display:block; font-size:70%;}
+.transactionWell .desc {font-size:14px; color:#666; text-align:center;}
+/*交易流水详单*/
+.transactionFlowInfo {border-bottom:1px solid #ccc; padding:10px;}
+.transactionFlowInfo li {width:100%; height:20px; margin:5px 0; font-size:15px; overflow:hidden;}
+.transactionFlowInfo li label {min-width:70px; display:inline-block; vertical-align:middle; color:#888;}
+.transactionFlowInfo li .pull-right {text-align:right; color:#333;}
+/*商品详情*/
+.goodsDetails {border-bottom:1px solid #ccc; padding:10px;}
+.goodsDetails dt {height:20px; margin:5px 0;}
+.goodsDetails dd li {height:60px; padding:5px 0; overflow:hidden;}
+.goodsDetails dd li>.thumb {display:inline-block;}
+.goodsDetails dd li>.thumb>* {display:inline-block; vertical-align:middle;}
+.goodsDetails dd li>.thumb>.img-wrap {width:50px; height:50px; margin-right:5px; border:1px solid #ddd; overflow:hidden;}
+.goodsDetails dd li>.thumb>.caption {font-size:13px; color:#666;}
+.goodsDetails dd li .price {text-align:right; margin-top:6px;}
+.goodsDetails dd li .price small {color:#888;}
+
+
+/*订购盒子 验证提示*/
+#box-order .box-order-form .goodsNum {position: relative;}
+#box-order .box-order-form .goodsNum span {margin-left:3px;}
+#box-order .box-order-form .goodsNum label {position: absolute; width: 90px; left: -20px; top: 30px;}
+
+/*订购盒子说明 链接*/
+#box-order .instruction-link {
+    padding-left: 40px;
+    margin-bottom:10px;
+    position:relative;
+}
+#box-order .instruction-link::before{
+	content:"";
+	position:absolute;
+	width:25px;
+	height:25px;
+	left:10px;
+	top:-3px;
+	background:url(ask.png) 0px 0px no-repeat;
+	background-size:cover;
+	
+}
+#box-order .instruction-link a {
+    color: #696E76;
+}
+
+/*收货地址 验证提示信息*/
+
+#buyer-info-form label.error {
+    display: inline-block;
+    padding-bottom: 5px;
+    padding-left: 10px;
+    color: #e00;
+}
+
+/*我的订单 汇款说明*/
+
+#my-order .order {
+    display: block;
+}
+
+@media screen and (max-width: 320px) { /*当屏幕尺寸小于320px时，应用下面的CSS样式*/
+  .goodsItem>.col-m {width:56%; padding-right:0;}
+}

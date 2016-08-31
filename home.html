@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html>
+<head lang="cn">
+    <title>订购盒子</title>
+    <meta charset="UTF-8">
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta name="renderer" content="webkit|ie-comp|ie-stand">
+    <meta name="format-detection" content="telephone=no" />
+    <meta name="format-detection" content="email=no" />
+    <meta name="format-detection" content="address=no">
+    <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,userscalable=no">
+    <link rel="stylesheet" href="assets/css/sm.css"/>
+    <link rel="stylesheet" href="//g.alicdn.com/msui/sm/0.6.2/css/sm-extend.css">
+    <link rel="stylesheet" href="assets/css/opf/common.css"/>
+</head>
+<style type="text/css">
+    .body_bg {height:100%; background:#f0f5f9;}
+    p {
+        margin: 0.5em 0;
+        font-size: 12px;
+    }
+    .bold-font {
+        font-weight: 700;
+    }
+    table  {
+        font-size: 12px;
+        text-align: center;
+        border: 1px solid #000;
+    }
+    table td {
+        border: 1px solid #000;
+    }
+    .agreementText{
+        padding: 0 15px;
+        width: 100%;
+        overflow-y: scroll;
+    }
+    .agt-title {
+        /*font-size: 1.5em;*/
+        height:2em;
+        line-height: 2em;
+        font-weight: 700;
+        text-align: center;
+
+    }
+    .blank {
+        width: 100%;
+        height: 60px;
+    }
+    .bottom-btn{
+        position: fixed;
+        bottom: 0;
+        height: 3em;
+        line-height: 3em;
+        width: 100%;
+        text-align: center;
+        color: #ff8400;
+        background-color: #fff;
+        border-top: 1px solid #c0c0c0;
+        border-bottom: 1px solid #c0c0c0;
+        overflow-y: scroll;
+    }
+    .bottom-btn .cancle-btn{
+        width: 49%;
+        height: inherit;
+        float: left;
+        border-right: 1px solid #c0c0c0;
+    }
+    .bottom-btn .agree-btn{
+        width: 49%;
+        height: inherit;
+        float: right;
+    }
+    .order-info{
+        position: fixed;
+        bottom: 0;
+        border-top: 1px solid #c0c0c0;
+    }
+    .zhuji_label {
+        background-color: #fecf4d;color: #C62B2B;width:65px;height:26x;line-height:26px;border-radius: 2px;text-align: center; position:absolute; top:67px; left:-70px;
+    }
+    .zhuji_tips {
+        height:20px; font-size:10px; line-height:16px; position:absolute; top:30px; left:30;
+    }
+    .zhuji_tips.active {color:red;}
+</style>
+<body id="box-order" class="body_bg">
+<div class="page-group">
+    <div id="router" class="page page-current">
+        <header id="top" class="bar bar-nav">
+            <a class="button-link button-nav pull-left" href="javascript:void(0)" data-transition='slide-out' onclick="appClose()">
+                <span class="icon icon-left" style="font-weight: bold;"></span>
+            </a>
+            <h1 id="title" class="title">
+                <b>订购盒子</b>
+            </h1>
+            <div id="title-right"><!--onclick="loadOrderListDetail()"-->
+                <a id="cart-detailList" class="button button-link button-nav pull-right" href="#">
+                    我的订单
+                </a>
+            </div>
+        </header>
+        <div id="content" class="content native-scroll" style="margin: 1rem 0 1.75rem 0;">
+            <div class="agreement">
+                <div class="agreementText">
+            <div  class="agt-title" >租机协议</div>
+                    <article>
+                        <p>甲方：深圳盒子支付信息技术有限公司</p>
+                        <p>乙方：</p>
+
+                        <p style="margin-top: 30px;">鉴于甲方举行2016年3月的市场促销活动，根据乙方的综合表现，乙方获得甲方的有偿租机资格，现甲乙双方就租机达成本协议。</p>
+                        <p class="bold-font">一、合同标的</p>
+                        <p class="bold-big" style="font-size:14px;font-weight: bold;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;4-6月开通宝首次进货满20台的方可享受循环返货活动！！！</p>
+                        <p>1、甲方出租BOXPOS 600硬件（简称出租硬件）给乙方，具体出租数量以经甲方确认的订单为准，乙方应当依照本协议约定向甲方支付第一期租金和第二期租金。</p>
+                        <p>2、乙方在提货时应付款项及第一期租金标准根据下表确认：</p>
+                        <table>
+                            <tr><td width='10%'>租机型号</td><td width='10%'>初始租机价格</td><td width='20%'>初始提货台数 （参加活动资格）</td><td width='23%'>返货台数</td><td width='37%'>返货规则</td></tr>
+                            <tr><td >600P</td>
+                                <td>120元/台</td>
+                                <td align="left">20台（某一周期内在开通宝一次性成功订购不低于20台的视为参加活动）</td>
+                                <td align="left">返货台数=前一周期内的新增有效活跃商户数（即蓝牙机600/602和五项不重复及周期内刷卡+微信支付宝交易≥1000元的商户>数量）</td>
+                                <td align="left">1、每月按10天/周期划分为三个周期；公司在每月11号/21号/月末最后一天为结点，相邻两个结点之间为一个周期，每次返货根据前一个周期内新增有效活跃商户数返货。并在下一周期内开始寄送。<br/>2、一次提货，循环返货：返货机型均为600（租机）且纳入租机考核；赠送为凑整发货（5台的整数倍），如某盒伙人达标8台，则发货5台，另3台与下一周期返货的机具凑整再发。</td></tr>
+                        </table>
+                        <p>备注：</p>
+                        <p>（1）乙方提货时，应支付初始120元/台租金</p>
+                        <p>（2）周期新增有效活跃商户指每个周期最后一天晚8点前，提交商户资料，经公司审核通过后绑定SN码并成功开通的商户，营业执照号不重复或没有营业执照且商户名称、身份证号、手机号、银行卡、SN号不重复；周期内商户刷卡金额（或微信、支付宝交易额，不含免扣金额）≥1000元为活跃商户。</p>
+                        <p>（3）第二期租金自出租硬件后开通次月开始考核，考核期为六个自然月，第二期租金标准为20元/台，第二期租金最高20元/台。考核达标的，该台硬件不缴纳租金，考核不达标的，该台硬件应当缴纳租金</p>
+                        <p>（4）返货硬件不收取第一期租金，但第二期租金按照正常租机考核和收取</p>
+                        <p class=bold-font>3.考核周期</p>
+                        <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;考核周期为6个月，自开通次月开始考核；提货未开通的机具将在第三个月自动按照考核不达标计算，按照20元/台收取第二期租金，最高收取20元/台。</p>
+                        <p class=bold-font >4.考核方式</p>
+                        <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;季度考核：进入考核期后，前三个月免除租赁考核，第四、五、六仨月交易总量≥15000元则考核达标，如考核不达标即季度总交易量＜15000元则按20元/台扣除，最多扣除20元/台。</p>
+                        <p class=bold-font>5.考核对象及方式</p>
+                        <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;自盒伙人成功订货后，前三个月开通商户的，考核进件人（用开通宝开通租机的盒伙人），考核不达标公司从进件人的分润/奖励中扣除20元/台；如租机在前三个月未开通商户的，公司将从提货人的分润/奖励中扣除20元/台。</p>
+                        <p>6、出租硬件仅能用于绑定新增有效商户，本协议所指的商户特指新增有效商户;考核期内，使用出租硬件的商户第四、五、六仨月交易额大于15000元的，视为该台硬件该季全部达标（简称整体达标）。</p>
+                        <p>7、出租硬件与出租硬件返修后返回的机具不再参与甲方活动中【地推激励】中的【终端类型】激励或其他硬件相关激励，乙方应通知相关人员。</p>
+                        <p>8、乙方恶意套取甲方资源达600元以上的，甲方有权取消乙方有偿租机资格，并有权要求乙方一次性按照正常的采购价购买全部出租硬件。恶意套取包括但不限于乙方不以发展真实新增有效商户为目的开通商户。</p>
+                        <p>9、出租硬件在一年考核期内可以解绑三次。</p>
+                        <p>10、出租硬件返修的，乙方应当①每月初5个工作日向甲方进行返修申报，②申报后一周内将返修机具寄送至甲方指定地址；同时满足条件①和②的，返修当月暂停收取第二期租金，该租机收取租金的期限自动顺延；乙方未按甲方要求申报的，即未满足①或②，甲方有权正常收取第二期租金。</p>
+                        <p>11、甲方有权从乙方已缴纳的第二期租金保证金中直接扣除第二期租金，剩余部分于活动结束后无息返回。</p>
+                        <p>12、考核期结束后，出租硬件免租金。</p>
+                        <p class="bold-font">二、租赁期限</p>
+                        <p>出租硬件的租赁期限为本协议有效期，若本协议自动延续，租赁期限自动延续。</p>
+                        <p class="bold-font">三、权利义务</p>
+                        <p>1、甲方拥有出租硬件的所有权。</p>
+                        <p>2、甲方应当按照本协议约定向乙方提供出租硬件，并负责将出租硬件快递至乙方收货地址。</p>
+                        <p>3、甲方为钱盒硬件提供法律规定厂家应当承担的售后服务（一年免费保修）。甲方承诺对产品的主要部件免费保修一年（因保管、使用不善等人为因素造成的损坏不在免费保修范围之内），对于因保管、使用不善等人为因素造成的损坏及超出保修期的产品，甲方同意进行有偿维修，甲方有偿维修时仅收取成本费用。</p>
+                        <p>4、乙方拥有出租硬件的使用权。</p>
+                        <p>5、乙方应当妥善保管甲方出租的硬件，登记好硬件去向。</p>
+                        <p>6、出租硬件出现故障时，乙方应及时维修，如乙方无法自行解决，应按照甲乙双方约定交甲方维修。</p>
+                        <p>7、乙方不得擅自对出租硬件进行包括但不限于私自拆卸、逆向研究等行为。</p>
+                        <p class="bold-font">四、补充约定</p>
+                        <p>出租硬件经商户使用三年后，甲方不再收回硬件。</p>
+                        <p class="bold-font">五、不可抗力</p>
+                        <p>1、“不可抗力”是指本协议任何一方不能合理控制、不可预见或即使预见亦无法避免的事件，该事件妨碍、影响或延误任何一方根据本协议履行其全部或部分义务。</p>
+                        <p>2、如发生不可抗力事件，遭受该事件的一方应立即用可能的最快捷的方式通知对方并提供相应证明材料，然后由双方协商解决。</p>
+                        <p class="bold-font">六、违约责任</p>
+                        <p>1、由于一方不履行本协议规定的义务或严重违反协议，致使本协议规定的业务无法经营或无法达到本协议规定的经营目的，守约方有权单方终止协议，并有权要求违约方赔偿其给守约方造成的全部损失。如双方同意继续合作，违约方仍应赔偿因其违约行为给守约方造成的经济损失。本协议条款有特殊约定的从特殊约定。</p>
+                        <p>2、对非双方的过错所产生的损失，双方应依照公平原则分担，并共同向有过错的第三方索赔。</p>
+                        <p class="bold-font">七、协议有效期</p>
+                        <p>本协议自乙方确认后并经甲方系统记录之时生效，有效期两年；如本协议到期前30日内任何一方未提出终止要求，则本协议自动顺延壹年，以后依此类推，自动延续次数不限。</p>
+                        <p class="bold-font">八、其他</p>
+                        <p>1、因本协议发生的争议，由甲方所在地人民法院管辖。</p>
+                        <p>2、未尽事宜，按照甲乙双方签订的钱盒代理协议或者钱盒服务商合作协议执行。</p>
+                        <p class="bold-font">3、乙方对本协议之所有条款均已充分注意，并已详细知晓对本协议享有的权利和义务；乙方对违反本协议时所应承担的违约责任的风险亦有明确的知晓；对协议中限制或免除甲方责任的条款，以及增加乙方责任的条款，乙方均已仔细阅读、充分理解并自愿接受该等条款。</p>
+                        <p class="bold-font">4、乙方点击确认，即视为乙方同意签署本协议并受本协议约束。</p>
+                    </article>
+        </div>
+                <div class="blank"></div>
+            </div>
+        </div>
+        <nav id="foot" class="bar bar-tab">
+            <a class="tab-item active purchase-orange-bg" href="javascript:void(0)" data-transition='slide-out' onclick="appClose()">
+                <span class="purchase-white">
+                    取消
+                </span>
+            </a>
+            <a id="home-agree" class="tab-item purchase-orange-bg" href="javascript:void(0)">
+                <span class="purchase-white">
+                    同意
+                </span>
+            </a>
+        </nav>
+    </div>
+</div>
+</body>
+<script type='text/javascript' src='assets/scripts/vendor/zepto.js' charset='utf-8'></script>
+<script type='text/javascript' src='assets/scripts/vendor/sm.js' charset='utf-8'></script>
+<script type='text/javascript' src='//g.alicdn.com/msui/sm/0.6.2/js/sm-extend.min.js' charset='utf-8'></script>
+<script type='text/javascript' src='assets/scripts/vendor/underscore.js' charset='utf-8'></script>
+<script type="text/javascript" src="assets/scripts/js/common.js"></script>
+<script type="text/javascript" src="assets/scripts/app/common/common.js"></script>
+<script type="text/javascript">
+$(function(){
+    var token = getToken();
+    if(token != ''){
+        sessionStorage.setItem('ktbToken', token);
+    }
+    var goodsType = getGoodsType();
+    if(goodsType != ''){
+        sessionStorage.setItem('goodsType', goodsType);
+    }
+
+    $('#home-agree').on('click', function(){
+        location.href = 'index.html';
+    });
+
+    $('#cart-detailList').on('click', function () {
+        $.router.load(bp()+webUrlPath()+'/assets/scripts/app/orderlist/default.html', false);
+    });
+})
+</script>
+</html>

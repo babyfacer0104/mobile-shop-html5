@@ -1,0 +1,141 @@
+<meta charset="utf-8" />
+<script type="text/template">
+<%
+    //购物车数据读取缓存
+    var data = null;
+    data = localStorage;
+%>
+</script>
+<div class="page-group">
+    <div class="page page-current">
+        <header id="top" class="bar bar-nav">
+            <a class="button button-link button-nav pull-left back" href="#" data-transition='slide-out'><!--href="<%-bp()%><%-webUrlPath()%>/assets/scripts/app/list/default.html"-->
+                <span id="goList" class="icon icon-left"></span>
+            </a>
+            <h1 id="title" class="title">
+                <b>我的购物车</b>
+            </h1>
+            <div id="title-right">
+                <a id="cart-detailList" class="button button-link button-nav pull-right" href="<%-bp()%><%-webUrlPath()%>/assets/scripts/app/orderlist/default.html">
+                <!--<a class="button-link button-nav pull-right open-popup" href="<%-bp()%>/assets/scripts/app/orderlist/default.html" data-popup=".popup-about">-->
+                    <span class="purchase-white">
+                        我的订单
+                    </span>
+                </a>
+            </div>
+        </header>
+        <div id="content" class="content native-scroll" style="margin: 0 0 1.75rem 0;">
+            <!--抬头 帮助说明-->
+            <div class="row" style="margin: 1.3rem 0 .3rem 0.9rem;">
+                <div style="float: left;">
+                    <img src="<%-bp()%><%-webUrlPath()%>/assets/images/help.png" style="width: 1.7rem!important;height: 1.7rem!important;" />
+                    <!--<div style="background-image: url('/iboxpay-ktbao/assets/images/help.png'); background-repeat: no-repeat; background-size:100% 100%; width: 1.7rem; height: 1.7rem;"></div>-->
+                </div>
+                <div style="float: left;color: #797C81;line-height: 1.7rem;margin-left: .5rem;" onclick="showInstruction()"><strong>订购盒子说明</strong></div>
+            </div>
+            <%
+                var cartAccount = 0;
+                var value = null;
+                var expressMark = '0';
+                var postageArr = [];
+                for(var i = 0; i < data.length; i++){
+                    var delId = data.key(i);
+                    if(data.key(i).indexOf('cartData') != -1 ){
+                        value = data.getItem(data.key(i));
+                        var model = eval("("+value+")");
+                        var total = model.totalPrice.replace('¥', '').replace(',','');
+                        cartAccount += parseFloat(total*100) * parseInt(model.purchaseNum);
+                        if(model.postage){
+                            postageArr.push(model.postage);
+                        }
+            %>
+            <div id="<%=delId%>" style="margin-bottom: 5%;">
+                <div class="block-row">
+                    <table class="cart-table" border="0" style="width: 100%; margin: 1.0rem 0 0 0;">
+                        <tr>
+                            <td rowspan="3" width="5%">
+                                <img src="<%=model.goodsPic%>" style="width: 5.7rem!important; height: 6.5rem!important;" />
+                                <!--<%-bp()%><%-webUrlPath()%>/assets/images/钱盒603i.png-->
+                            </td>
+                            <td width="95%" class="font34">
+                                <strong><%=model.goodsName%></strong>
+                            </td>
+                        </tr>
+                        <tr class="font34">
+                            <td width="95%">
+                                <div id="cart-total-price" class="cart-red">
+                                    <%=model.totalPrice%>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td width="95%" class="detail-glay">
+                                <%=model.goodsPack%><%=model.sendTime%>
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+                <div class="block-row-bottom" style="width: 100%;">
+                    <p style="float: left;width: 4.5rem;margin: 1em 0 1em 0.5rem;"><a id="cart-del" class="ktb-button button-warning" ascId="<%=delId%>" >删除</a></p>
+                    <p style="float: right;margin: 1em 0.5rem 1em 0;">
+                        <a class="detail-reduce" href="javascript:void(0);" title="减1" hidefocus="" cartPrice="<%=model.totalPrice%>" cartId="<%=model.goodsId%>"><strong>-</strong></a>
+                        <input class="tb-text detail-text" type="text" value="<%=model.purchaseNum%>" minlength="<%=model.minPack%>" title="请输入购买量"  cartId="<%=model.goodsId%>" cartPrice="<%=model.totalPrice%>" disabled />
+                        <a class="detail-increase" href="javascript:void(0);" hidefocus="" title="加1" cartPrice="<%=model.totalPrice%>" cartId="<%=model.goodsId%>"><strong>+</strong></a>
+                    </p>
+                </div>
+            </div>
+            <%}
+            }%>
+            <%
+                if(postageArr != [] ) {
+                    var testArr = [];
+                    for(var i=0; i < postageArr.length; i++) {
+                        testArr.push(1);
+                    }
+                    if(postageArr.join('.') == testArr.join('.')) {
+                        expressMark = '1';
+                    }
+                }
+            %>
+        </div>
+
+        <nav id="foot" class="bar bar-tab">
+            <a class="tab-item cart-bg-white font34" style="width: 2%;" href="#">
+                <span class="cart-glay" style="float: left; margin-left: .5rem;">
+                    <b>合计</b>&nbsp;&nbsp;<font id="cart-account" class="cart-red">¥<%=outputmoney(cartAccount/100) == '' ? 0 : outputmoney(cartAccount/100) %></font>
+                </span>
+            </a>
+            <a id="cart-balance" class="tab-item purchase-orange-bg" href="javascript:void(0)" style="display:<%=value==null? 'none': 'table-cell'%>;">
+                <span class="purchase-white">
+                    结算
+                </span>
+            </a>
+            <input type="hidden" id="expressMark" value="<%=expressMark%>"/>
+        </nav>
+        <div class="instruction-overlay" style="display: none;">
+            <div class="instruction">
+                <div class="instruction-title">订购盒子说明</div>
+                <div class="instruction-content">
+                    <ol>
+                        <li>确认盒子型号与数量。</li>
+                        <li>填写收货人信息。</li>
+                        <li>确认订单后，汇款到盒子支付指定账户并备注订单号。</li>
+                        <li>快递送货上门。</li>
+                    </ol>
+                </div>
+                <div class="instruction-confirm" onclick="hideInstruction()">
+                    <a href="#">确定</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script type="text/template">
+    <%
+        $.ajax({
+            url: bp()+webUrlPath()+"/assets/scripts/app/cart/cart.js",
+            dataType: "script",
+            cache: false
+        });
+    %>
+</script>

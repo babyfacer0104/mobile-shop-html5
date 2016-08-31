@@ -1,0 +1,110 @@
+<meta charset="utf-8" />
+<script type="text/template" id="tpl">
+    <%
+        var obj = null;
+        var orderData = sessionStorage.getItem('order_data');
+        var obj = eval("(" + orderData + ")");
+    %>
+</script>
+<div class="page-group">
+<div class="page page-current">
+    <div class="body_bg">
+    <header id="top" class="bar bar-nav">
+        <a class="button button-link button-nav pull-left back" href="<%-bp()%><%-webUrlPath()%>/assets/scripts/app/orderlist/default.html"><!--id="goback-detail" javascript:void(0)-->
+            <span class="icon icon-left" style="font-weight: bold;"></span>
+        </a>
+        <h1 id="title" class="title">
+            <b>订单详情</b>
+        </h1>
+        <div id="title-right"></div>
+    </header>
+    <div class="main-container orderDetail" style="padding-top: 3.125rem;">
+        <section>
+            <div class="div-table">
+                <div>订单状态</div>
+                <div><span id="orderStatus" class="<%=getOrderStatus(obj.orderStatus)[0]%>"><%=getOrderStatus(obj.orderStatus)[1]%></span></div>
+                <!--<a href="javascript:" onclick="showInstruction()" class="remittance-instruction txt-orange">(汇款说明)</a>-->
+            </div>
+        </section>
+        <section>
+            <div class="div-table">
+                <div id="receiver"><%=obj.receiver%></div>
+                <div id="receiverMobile"><%=obj.receiverMobile%></div>
+            </div>
+            <div>
+                <div id="receiveAddr"><%=obj.receiveAddr%></div>
+            </div>
+        </section>
+        <section>
+            <div class="product-detail">
+                <%
+                    var model = null;
+                    $.ajax({
+                    type: 'GET',
+                    async: false,
+                    dataType: 'json',
+                    url: serverUrlPath()+'/mall/getOrderDetailH5?orderNo='+obj.orderNo+'&access_token='+sessionStorage.getItem('ktbToken'),
+                    success: function(resp){
+                    model = resp.result;
+                    if(obj.goodstype == 1){
+                        _.each(model, function(v, i){%>
+                <div>
+                    <a><i style="background-image:url(<%=v.goodsPic%>);"></i>&nbsp;<span class="st" style="top: 5px"><%=v.goodsName%></span>&nbsp;&nbsp;<span class="xst tg" style="top: 5px">(<%=v.purchasegoodsnum/purchaseNum%>盒/箱)</span>'
+                        <div style="background-color: #fecf4d;color: #C62B2B;width: 80px;height:30px;line-height:30px;margin-top:10px;border-radius: 2px;text-align: center">有偿租机</div>'
+                    </a>
+                    <a class="tr">
+                        <span class="st rt" style="top: 0"><p>¥<%=outputmoney(v.goodsPrice/100)%></p></span>
+                        <span class="st tg" style="top: 0">x&nbsp;<%=v.purchaseNum%></span>
+                    </a>
+                </div>
+                <%});}else{
+                _.each(model, function(v, i){%>
+                <div>
+                    <a><i style="background-image:url(<%=v.goodsPic%>);"></i>&nbsp;<span class="st"><%=v.goodsName%></span>&nbsp;&nbsp;<span class="xst tg">(<%=v.purchasegoodsnum/purchaseNum%>盒/箱)</span></a>
+                    <a class="tr">
+                        <span class="st rt"><%=outputmoney(v.salesPrice/100)%></span><br>
+                        <span class="st tg">x&nbsp;</span><span id="totalNumber"><%=v.purchaseNum%></span>
+                    </a>
+                </div>
+                <%});%>
+                <%}}});%>
+            </div>
+            <div class="section">
+                <div class="section-row">
+                    <div class="col-sm-3 v-top">
+                        运费&nbsp;&nbsp;
+                        <span class="txt-red">
+                            <% if(obj.expressFee == '1') {%>
+                                到付
+                            <% }else {%>
+                                ¥0元
+                            <% }%>
+                        </span>
+                    </div>
+                    <div class="col-sm-6 tr">
+                        合计&nbsp;&nbsp;<span id="realPayPrice" class="txt-red"><%=outputmoney(obj.realPayPrice/100)%></span>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <section>
+            <div class="div-table">
+                <div>订单编号</div>
+                <div id="orderNo"><%=obj.orderNo%></div>
+            </div>
+            <div class="div-table">
+                <div>下单时间</div>
+                <div id="createTimeToFormat"><%=obj.createTimeToFormat%></div>
+            </div>
+            <div class="div-table">
+                <div>快递单号</div>
+                <div id="expressNo"><%=obj.expressNo%></div>
+            </div>
+        </section>
+        <section class="orderDetail-btn" id="orderDetail-btn" style="display:none;">
+            <div><span class="ot">取消订单</span></div>
+        </section>
+    </div>
+</div>
+</div>
+</div>

@@ -1,0 +1,33 @@
+<meta charset="utf-8" />
+<script type="text/template" id="tpl">
+<%
+    $("<link>").attr({
+        rel: "stylesheet",
+        type: "text/css",
+        href: bp()+webUrlPath()+"/assets/scripts/app/pay/css.css"
+    }).appendTo("head");
+
+    sessionStorage.setItem('payType',2);
+%>
+</script>
+<div class="page-group">
+    <div class="page page-current">
+        <header id="top" class="bar bar-nav">
+            <a class="button button-link button-nav pull-left" href="<%-bp()%><%-webUrlPath()%>/assets/scripts/app/orderlist/default.html" data-no-cache="true">
+                <span class="icon icon-left" style="font-weight: bold;"></span>我的订单
+            </a>
+            <h1 id="title" class="title">
+                <b>订购失败</b>
+            </h1>
+        </header>
+        <div class="main-container">
+            <div class="prompt-callback" style="margin-top:100px;">
+                <div class="icon-xl fail"></div>
+                <h4 class="tg">订单失败</h4>
+            </div>
+            <div class="btn-box" style="position:absolute;bottom:40px;width:80%;left:50%;margin-left:-40%;">
+                <a class="btn btn-block btn-primary" style="background-color:#ED7917;border-color:#ED7917;" href="<%-bp()%><%-webUrlPath()%>/assets/scripts/app/orderlist/default.html" data-no-cache="true">重新订购</a>
+            </div>
+        </div>
+    </div>
+</div>
